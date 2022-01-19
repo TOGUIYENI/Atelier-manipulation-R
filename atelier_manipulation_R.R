@@ -577,7 +577,7 @@ head(gapminder_messy, 10)
 url_defi <- "https://raw.githubusercontent.com/gabrieldansereau/RanDonnees2022-atelier-manipulation-R/main/gapminder_messy_challenges.csv"
 gapminder_defi_clean <- read_csv(url_defi) %>%
   slice(-1) %>%
-  rename(year = ...2,
+  rename(year = X2,
          lifeExp = `life _Exp`) %>%
   mutate(lifeExp = as.numeric(lifeExp))
 
