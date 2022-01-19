@@ -7,11 +7,18 @@ output: html_document
 
 Bienvenue à cet atelier sur la manipulation et le nettoyage de données avec R.
 
-Cet atelier a été développé à partir des ateliers sur la manipulation de données de [Software Carpentry](https://swcarpentry.github.io/r-novice-gapminder/13-dplyr/index.html) (liens supplémentaires à la fin du document). Il fait suite à l'atelier d'introduction présenté par **Francis Banville**. D'autres ressources sont également disponibles au [repo GitHub suivant](https://github.com/gabrieldansereau/RanDonnees2022-atelier-manipulation-R).
+Cet atelier a été développé à partir des ateliers sur la manipulation de données
+de [Software
+Carpentry](https://swcarpentry.github.io/r-novice-gapminder/13-dplyr/index.html)
+(liens supplémentaires à la fin du document). Il fait suite à l'atelier
+d'introduction présenté par **Francis Banville**. D'autres ressources sont
+également disponibles au [repo GitHub
+suivant](https://github.com/gabrieldansereau/RanDonnees2022-atelier-manipulation-R).
 
 ### Auteur
 
-Gabriel Dansereau (il/lui), étudiant au doctorat en sciences biologiques à l'Université de Montréal
+Gabriel Dansereau (il/lui), étudiant au doctorat en sciences biologiques à
+l'Université de Montréal
 
 📧 gabriel.dansereau@umontreal.ca 
 
@@ -21,7 +28,11 @@ Gabriel Dansereau (il/lui), étudiant au doctorat en sciences biologiques à l'U
 
 ## Objectif
 
-L'objectif de cet atelier est de vous familiariser avec la manipulation et au nettoyage de données avec _R_ pour que vous puissez réaliser ces opérations par vous-même sur vos propres jeux de données. Nous reverrons des fonctions qui vous ont déjà été présentées, mais de manière un peu plus exhaustive afin de vous montrer différentes possibilités de manipulation.
+L'objectif de cet atelier est de vous familiariser avec la manipulation et au
+nettoyage de données avec _R_ pour que vous puissez réaliser ces opérations par
+vous-même sur vos propres jeux de données. Nous reverrons des fonctions qui vous
+ont déjà été présentées, mais de manière un peu plus exhaustive afin de vous
+montrer différentes possibilités de manipulation.
 
 ## Contenu
 
@@ -84,9 +95,14 @@ summary(gapminder)
 
 # 1.0 Les opérations de base pour manipuler les données
 
-Nous verrons dans cet atelier les fonctions `tidyverse`, un ensemble de packages qui rendent la manipulation de données et le nettoyage très efficace, en particulier `dplyr` et `tidyr`. Cela dit, il est souvent possible de réaliser les mêmes opérations avec les fonctions de base de R (_base-R_). J'ai donc mis quelques exemples afin de comparer. 
+Nous verrons dans cet atelier les fonctions `tidyverse`, un ensemble de packages
+qui rendent la manipulation de données et le nettoyage très efficace, en
+particulier `dplyr` et `tidyr`. Cela dit, il est souvent possible de réaliser
+les mêmes opérations avec les fonctions de base de R (_base-R_). J'ai donc mis
+quelques exemples afin de comparer.
 
-Le package `dplyr` est le plus important pour la manipulation de données. Il comprend 5 opérations de base, que nous survolerons dans cette section.
+Le package `dplyr` est le plus important pour la manipulation de données. Il
+comprend 5 opérations de base, que nous survolerons dans cette section.
 
 1. `select`: sélection de colonnes
 2. `filter`: sélections de rangées
@@ -96,7 +112,9 @@ Le package `dplyr` est le plus important pour la manipulation de données. Il co
 
 ## 1.1 Sélection de colonnes avec `select`
 
-_Note: J'utilise la fonction `head()` simplement pour éviter d'afficher trop de rangées à la fois. La fonction n'est pas nécessaire pour la manipulation de données en soi._
+_Note: J'utilise la fonction `head()` simplement pour éviter d'afficher trop de
+rangées à la fois. La fonction n'est pas nécessaire pour la manipulation de
+données en soi._
 
 ```{r}
 # Sélectionner certaines colonnes seulement
@@ -137,7 +155,8 @@ gapminder %>%
   head()
 ```
 
-Remarquez que l'ordre des opérations n'est pas interchangeable dans ce cas-ci, puisqu'on retire la colonne `continent`.
+Remarquez que l'ordre des opérations n'est pas interchangeable dans ce cas-ci, 
+puisqu'on retire la colonne `continent`.
 
 ```{r}
 # Cette opération est encore réalisable avec base-R (deux façons)
@@ -168,7 +187,9 @@ gapminder %>%
 
 ## Défi 1
 
-Écrivez une commande qui produit un data frame (un `tibble`) avec les valeurs pour l'**Afrique seulement** et qui ne montre que le contenu des colonnes `lifeExp`, `country` et `year`. Combien de rangées le data frame contient-il?
+Écrivez une commande qui produit un data frame (un `tibble`) avec les valeurs 
+pour l'**Afrique seulement** et qui ne montre que le contenu des colonnes 
+`lifeExp`, `country` et `year`. Combien de rangées le data frame contient-il?
 
 ```{r}
 
@@ -203,7 +224,10 @@ gapminder %>%
   summarize(mean_gdpPercap = mean(gdpPercap))
 ```
 
-C'est ici que le `tidyverse` se démarque particulièrement. Avec base-R, il faudrait plutôt répéter l'opération séparément pour chaque groupe, puis assembler les lignes une à une, ou encore utiliser une boucle `for`. Dans tous les cas, le code résultant serait sûrement plus long et moins intuitif.
+C'est ici que le `tidyverse` se démarque particulièrement. Avec base-R, il
+faudrait plutôt répéter l'opération séparément pour chaque groupe, puis
+assembler les lignes une à une, ou encore utiliser une boucle `for`. Dans tous
+les cas, le code résultant serait sûrement plus long et moins intuitif.
 
 ```{r}
 # Grouper avec plusieurs variables à la fois
@@ -223,17 +247,21 @@ gapminder %>%
             sd_pop = sd(pop))
 ```
 
-Consultez la [Cheat Sheet sur la transformation de données](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf) pour avoir une idée des fonctions qui peuvent être utilisées avec `summarize()`.
+Consultez la [Cheat Sheet sur la transformation de
+données](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf)
+pour avoir une idée des fonctions qui peuvent être utilisées avec `summarize()`.
 
 ## Défi 2
 
-Calculez l'espérance de vie moyenne par pays. Essayez ensuite de trouver lequel a l'espérance de vie la plus **longue**.
+Calculez l'espérance de vie moyenne par pays. Essayez ensuite de trouver lequel
+a l'espérance de vie la plus **longue**.
 
 ```{r}
 
 ```
 
-*Suggestion: La fonction `arrange` peut vous aider à classer les rangées en ordre croissant ou décroissant.*
+*Suggestion: La fonction `arrange` peut vous aider à classer les rangées en
+ordre croissant ou décroissant.*
 
 ## 1.5 Ajout de nouvelles colonnes avec `mutate()`
 
@@ -339,9 +367,18 @@ gapminder %>%
 
 # 2.0 Nettoyage d'un jeu de données
 
-Le jeu de données `gapminder` que nous avons utilisé jusqu'à présent avait déjà été nettoyé. Tant mieux si c'est également le cas pour vos projets! Dans la plupart des cas, il est cependant nécessaire de faire un peu de nettoyage et de vérifier si les données ont du sens.
+Le jeu de données `gapminder` que nous avons utilisé jusqu'à présent avait déjà
+été nettoyé. Tant mieux si c'est également le cas pour vos projets! Dans la
+plupart des cas, il est cependant nécessaire de faire un peu de nettoyage et de
+vérifier si les données ont du sens.
 
-Dans cette section, nous allons travailler avec une version de `gapminder` que modifiée pour reproduire certaines erreurs communes qui peuvent s'introduire dans vos données. Nous allons voir comment les repérer et les corriger à l'aide de _R_. Ce ne sont pas les seules erreurs possibles évidemment et, avec un peu de chance, vous n'aurez pas à les corriger sur vos propres données. Nous aurons également l'occasion de pratiquer les opérations de traitement montrées précédemment. 
+Dans cette section, nous allons travailler avec une version de `gapminder` que
+modifiée pour reproduire certaines erreurs communes qui peuvent s'introduire
+dans vos données. Nous allons voir comment les repérer et les corriger à l'aide
+de _R_. Ce ne sont pas les seules erreurs possibles évidemment et, avec un peu
+de chance, vous n'aurez pas à les corriger sur vos propres données. Nous aurons
+également l'occasion de pratiquer les opérations de traitement montrées
+précédemment.
 
 Commençons par charger le jeu de données:
 
@@ -362,7 +399,10 @@ Combien d'erreurs pouvez-vous identifier dans l'aperçu du jeu de données?
 
 ## 2.1 Réparer la structure du jeu de données
 
-Nous allons maintenant corriger les erreurs pour réparer et nettoyer le jeu de données. Les opérations sont dans un ordre qui raisonnable pour ce jeu de données, mais il est possible qu'elles doivent être réalisées dans  un ordre différent avec un autre jeu de données.
+Nous allons maintenant corriger les erreurs pour réparer et nettoyer le jeu de
+données. Les opérations sont dans un ordre qui raisonnable pour ce jeu de
+données, mais il est possible qu'elles doivent être réalisées dans  un ordre
+différent avec un autre jeu de données.
 
 ### 1. Corriger l'entête
 
@@ -462,7 +502,8 @@ head(gapminder_messy)
 
 ### Défi 3
 
-Réparez le jeu de données suivant et calculez l'espérance de vie **médiane** par année.
+Réparez le jeu de données suivant et calculez l'espérance de vie **médiane** par
+année.
 
 ```{r}
 # Charger le nouveau jeu de données
@@ -504,7 +545,11 @@ gapminder_messy %>%
             le_max = max(lifeExp))
 ```
 
-Notez bien qu'il est généralement préférable de conserver les valeurs manquantes et de les ignorer lors d'une opération donnée en toute connaissance de cause. En retirant les observations comportant des `NA` dans une colonne du jeu de données, nous pourrions perdre des informations importantes dans d'autres colonnes. Cela est toutefois variable dépendamment de la situation.
+Notez bien qu'il est généralement préférable de conserver les valeurs manquantes
+et de les ignorer lors d'une opération donnée en toute connaissance de cause. En
+retirant les observations comportant des `NA` dans une colonne du jeu de
+données, nous pourrions perdre des informations importantes dans d'autres
+colonnes. Cela est toutefois variable dépendamment de la situation.
 
 ```{r}
 # Comment pouvons-nous détecter les NA?
@@ -612,7 +657,10 @@ gapminder_messy %>%
 
 ### 8. Trouver et identifier des valeurs aberrantes
 
-Pour trouver des valeurs aberrantes, il faut généralement plonger dans nos données et les explorer de plusieurs façons. Il est nécessaire de réfléchir aux valeurs qui semblent raisonnables pour nos variables et de penser à la manière dont certaines erreurs ont pu être commises.
+Pour trouver des valeurs aberrantes, il faut généralement plonger dans nos
+données et les explorer de plusieurs façons. Il est nécessaire de réfléchir aux
+valeurs qui semblent raisonnables pour nos variables et de penser à la manière
+dont certaines erreurs ont pu être commises.
 
 ```{r}
 # Il est parfois facile d'identifier des valeurs aberrantes en regardant les 
@@ -651,7 +699,9 @@ head(gapminder_messy, 10)
 
 ### Défi 4
 
-Reprenez votre jeu de données `gapminder_defi` du Défi 3. En quelle année l'**espérance de vie** a-t-elle été la plus élevée au **Canada**? Quel était le **nombre d'habitant** cette même année?
+Reprenez votre jeu de données `gapminder_defi` du Défi 3. En quelle année
+l'**espérance de vie** a-t-elle été la plus élevée au **Canada**? Quel était le
+**nombre d'habitant** cette même année?
 
 ```{r}
 # Voici les commandes pour le reproduire au besoin
@@ -669,22 +719,35 @@ gapminder_defi_clean <- read_csv(url_defi) %>%
 
 # 3.0 Réorganisation du jeu de données
 
-Les jeux de données sont souvent organisés dans un format pratique pour la saisie des données. Or, il arrive que ce format ne convienne pas l'analyse et complique certaines tâches. Il est donc parfois nécessaire d'effectuer des opérations en _R_ pour réorganiser la structure des données, sans toutefois en perdre ou risquer de faire des erreurs à la main.
+Les jeux de données sont souvent organisés dans un format pratique pour la
+saisie des données. Or, il arrive que ce format ne convienne pas l'analyse et
+complique certaines tâches. Il est donc parfois nécessaire d'effectuer des
+opérations en _R_ pour réorganiser la structure des données, sans toutefois en
+perdre ou risquer de faire des erreurs à la main.
 
 ### 3.1 Pivoter du format large au format long avec `pivot_longer()`
 
-Deux types d'organisation des jeux de données sont importants pour l'analyse: le format `long` et le format `large`. Le format `long` est plus pratique pour l'analyse à l'aide d'un langage de programmation comme R, alors que le format `large` est souvent plus instinctif pour la saisie de données. La figure suivante produite par Software Carpentry illustre cette différence:
+Deux types d'organisation des jeux de données sont importants pour l'analyse: le
+format `long` et le format `large`. Le format `long` est plus pratique pour
+l'analyse à l'aide d'un langage de programmation comme R, alors que le format
+`large` est souvent plus instinctif pour la saisie de données. La figure
+suivante produite par Software Carpentry illustre cette différence:
 
 <p align="center">
   <img align = "center" src="https://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig1.png" heigth="50%"
        title = "Format large vs long">
 </p>
 
-Le jeu de données `gapminder` est dans un format intermédiaire, mais ressemble plus au format long.
+Le jeu de données `gapminder` est dans un format intermédiaire, mais ressemble
+plus au format long.
 
-Les prochaines étapes montreront comme passer d'un format à l'autre. Cette étape peut également s'avérer pratique lors de certaines analyses ou manipulations de données.
+Les prochaines étapes montreront comme passer d'un format à l'autre. Cette étape
+peut également s'avérer pratique lors de certaines analyses ou manipulations de
+données.
 
-Nous utiliserons pour commencer une nouvelle version large de `gapminder` (déjà nettoyée comme dans la première partie). Le but sera de partir de la version large et d'arriver à une version identique au jeu de données initial.
+Nous utiliserons pour commencer une nouvelle version large de `gapminder` (déjà
+nettoyée comme dans la première partie). Le but sera de partir de la version
+large et d'arriver à une version identique au jeu de données initial.
 
 ```{r}
 # Rappel du jeu de données long
@@ -785,9 +848,19 @@ all(gap_normal == gapminder)
 
 # 4.0 Ressources supplémentaires
 
-Cet atelier a été développé à partir des ateliers [`dplyr`](https://swcarpentry.github.io/r-novice-gapminder/13-dplyr/index.html) et [`tidyr`](https://swcarpentry.github.io/r-novice-gapminder/14-tidyr/index.html) de Software Carpentry, qui sont sous licence [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). Le contenu a été adapté pour la présentation lors du défi Ran.Données 2022.
+Cet atelier a été développé à partir des ateliers
+[`dplyr`](https://swcarpentry.github.io/r-novice-gapminder/13-dplyr/index.html)
+et
+[`tidyr`](https://swcarpentry.github.io/r-novice-gapminder/14-tidyr/index.html)
+de Software Carpentry, qui sont sous licence [CC-BY
+4.0](https://creativecommons.org/licenses/by/4.0/). Le contenu a été adapté pour
+la présentation lors du défi Ran.Données 2022.
 
-Citation originale: Naupaka Zimmerman, Greg Wilson, Raniere Silva, Scott Ritchie, François Michonneau, Jeffrey Oliver, … Yuka Takemon. (2019, July). swcarpentry/r-novice-gapminder: Software Carpentry: R for Reproducible Scientific Analysis, June 2019 (Version v2019.06.1). Zenodo. http://doi.org/10.5281/zenodo.3265164
+Citation originale: Naupaka Zimmerman, Greg Wilson, Raniere Silva, Scott
+Ritchie, François Michonneau, Jeffrey Oliver, … Yuka Takemon. (2019, July).
+swcarpentry/r-novice-gapminder: Software Carpentry: R for Reproducible
+Scientific Analysis, June 2019 (Version v2019.06.1). Zenodo.
+http://doi.org/10.5281/zenodo.3265164
 
 ## Liens pertinents
 
