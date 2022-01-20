@@ -26,7 +26,8 @@ gapminder %>%
 gapminder %>%
   group_by(country) %>%
   summarize(lifeExp_mean = mean(lifeExp)) %>%
-  arrange(desc(lifeExp_mean))
+  arrange(desc(lifeExp_mean)) %>%
+  head()
 
 ### Défi 3
 

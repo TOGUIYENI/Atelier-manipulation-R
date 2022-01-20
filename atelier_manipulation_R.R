@@ -160,7 +160,10 @@ gapminder %>%
 # l'**Afrique seulement** et qui ne montre que le contenu des colonnes `lifeExp`, `country`
 # et `year`. Combien de rangées le data frame contient-il? """
 
-
+# Solution
+gapminder %>%
+  filter(continent == "Africa") %>%
+  select(lifeExp, country, year)
 
 # """## 1.3 Regrouper des éléments avec `group_by`"""
 
@@ -213,7 +216,15 @@ gapminder %>%
 # Calculez l'espérance de vie moyenne par pays. Essayez ensuite de trouver lequel a
 # l'espérance de vie la plus **longue**. """
 
+gapminder %>%
+  group_by(country) %>%
+  summarize(lifeExp_mean = mean(lifeExp)) %>%
+  filter(lifeExp_mean == max(lifeExp_mean))
 
+gapminder %>%
+  group_by(country) %>%
+  summarize(lifeExp_mean = mean(lifeExp)) %>%
+  arrange(desc(lifeExp_mean))
 
 # """*Suggestion: La fonction `arrange` peut vous aider à classer les rangées en ordre
 # croissant ou décroissant.*
