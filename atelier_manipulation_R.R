@@ -431,7 +431,16 @@ url_defi <- "https://raw.githubusercontent.com/gabrieldansereau/RanDonnees2022-a
 gapminder_defi <- read_csv(url_defi)
 head(gapminder_defi)
 
-# Solution
+# Réponse
+gapminder_defi_clean <- gapminder_defi %>%
+  slice(-1) %>%
+  rename(year = X2,
+         lifeExp = `life _Exp`) %>%
+  mutate(lifeExp = as.numeric(lifeExp))
+
+gapminder_defi_clean %>%
+  group_by(year) %>%
+  summarize(lifeExp_med = median(lifeExp))
 
 # """## 2.2 Nettoyer les valeurs au sein du jeu de données
 
@@ -593,6 +602,24 @@ gapminder_defi_clean <- read_csv(url_defi) %>%
   mutate(lifeExp = as.numeric(lifeExp))
 
 # Solution
+gapminder_defi_clean %>%
+  filter(country == "Canada")
+
+gapminder_defi_clean %>%
+  count(year)
+
+gapminder_defi_clean %>%
+  ggplot(aes(x = year, y = lifeExp)) +
+  geom_point()
+
+gapminder_canada <- gapminder_defi_clean %>%
+  filter(country == "Canada") %>%
+  mutate(lifeExp = replace(lifeExp, lifeExp == 80653, 80.653)) %>%
+  distinct()
+
+gapminder_canada %>%
+  filter(lifeExp == max(lifeExp, na.rm = TRUE)) %>%
+  pull(lifeExp, pop)
 
 # """# 3.0 Réorganisation du jeu de données
 
