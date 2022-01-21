@@ -216,11 +216,13 @@ gapminder %>%
 # Calculez l'espérance de vie moyenne par pays. Essayez ensuite de trouver lequel a
 # l'espérance de vie la plus **longue**. """
 
+# Solution 1
 gapminder %>%
   group_by(country) %>%
   summarize(lifeExp_mean = mean(lifeExp)) %>%
   filter(lifeExp_mean == max(lifeExp_mean))
 
+# Solution 2
 gapminder %>%
   group_by(country) %>%
   summarize(lifeExp_mean = mean(lifeExp)) %>%
@@ -601,25 +603,38 @@ gapminder_defi_clean <- read_csv(url_defi) %>%
          lifeExp = `life _Exp`) %>%
   mutate(lifeExp = as.numeric(lifeExp))
 
-# Solution
+## Solution
+# Regardons d'abord les données pour le Canada seulement
 gapminder_defi_clean %>%
   filter(country == "Canada")
 
+# Y'a-t-il des doublons ou des erreurs au niveau des années?
 gapminder_defi_clean %>%
   count(year)
 
+# Y'a-t-il des valeurs aberrantes pour l'espérance de vie?
 gapminder_defi_clean %>%
   ggplot(aes(x = year, y = lifeExp)) +
   geom_point()
 
+# Corrigeons les erreurs
 gapminder_canada <- gapminder_defi_clean %>%
   filter(country == "Canada") %>%
   mutate(lifeExp = replace(lifeExp, lifeExp == 80653, 80.653)) %>%
   distinct()
 
-gapminder_canada %>%
+# Vérifions maintenant en quelle année l'espérance de vie était la plus élevée
+# et extrayons la population cette même année
+reponse <- gapminder_canada %>%
   filter(lifeExp == max(lifeExp, na.rm = TRUE)) %>%
-  pull(lifeExp, pop)
+  pull(pop, year)
+reponse
+
+# À noter qu'il s'agit ici d'un vector nommé (named vector) qui ne contient
+# qu'une seule valeur.
+length(reponse) # 1 seule valeur
+names(reponse) # l'annee est le nom
+reponse[[1]] # la population est la valeur
 
 # """# 3.0 Réorganisation du jeu de données
 
